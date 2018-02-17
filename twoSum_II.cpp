@@ -1,4 +1,5 @@
 /* O(n) solution by using two indices */
+/* The input array is supposed to be sorted */
 vector<int> twoSum(vector<int>& nums, int target) {
     vector<int> result;
     int left = 0;
