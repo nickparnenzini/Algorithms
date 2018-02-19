@@ -1,6 +1,7 @@
 /* A possible implementation of quicksort in C++ */
-#include <iostream>
+
 #include <vector>
+#include <iostream>
 
 void exchange(int& x, int& y) {
     int tmp = x;
