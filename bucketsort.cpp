@@ -54,8 +54,7 @@ int msbits(int x, int minValue, int n) {
 
 void bucketsort(std::vector<int>& arr) {
     int n = arr.size();
-    int minValue = *(std::min_element(arr.begin(), arr.end()));
-    
+    int minValue = *(std::min_element(arr.begin(), arr.end()));   
     
     /* create n empty buckets */
     Node* bucketList[n];
