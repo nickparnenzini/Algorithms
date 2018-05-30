@@ -3,65 +3,43 @@
 
 using namespace std;
 
-vector<int> spiralCopy( const vector<vector<int>>& inputMatrix ) 
-{
-  int rows = inputMatrix.size();
-  int cols = inputMatrix[0].size();
+ bool isSafe(int r, int c, int n, int m) {
+      return (r >= 0 && r < n) && (c >= 0 && c < m);
+    }
+  
+vector<int> spiralCopy( const vector<vector<int>>& inputMatrix ) {
   vector<int> result;
-  
-  int countRes = 0;
-  int maxCol = cols-1;
-  int minCol = 0;
-  int minRow = 0;
-  int maxRow = rows-1;
-  int j = minCol;
-  int i = minRow;
-  bool inProgress = true;
-  
-  while (inProgress) {
-    i = minRow;
-    j = minCol;
-    
-    while (j <= maxCol) {
-      result.push_back(inputMatrix[i][j++]);
+  if (inputMatrix.empty())
+    return result;
+
+  int n = inputMatrix.size();
+  int m = inputMatrix[0].size();
+
+  bool seen[n][m];
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      seen[i][j] = false;
     }
-      
-    if (minRow >= maxRow) {
-      break;
+  }
+  int row = 0;
+  int col = 0;
+  int k = 0;
+  int dr[] = {0, 1, 0, -1};
+  int dc[] = {1, 0, -1, 0};
+  for (int i = 0; i < n*m; i++) {
+    result.push_back(inputMatrix[row][col]);
+    seen[row][col] = true;
+    // next position
+    int next_row = row + dr[k];
+    int next_col = col + dc[k];
+    if (isSafe(next_row, next_col, n, m) && !seen[next_row][next_col]) {
+      row = next_row;
+      col = next_col;
     }
-    
-    j = maxCol;
-    // go down
-    i++;
-    while (i <= maxRow) {
-      result.push_back(inputMatrix[i++][j]);
-    }
-    i = maxRow;
-    j--;
-    // go left
-    while(j >= minCol) {
-      result.push_back(inputMatrix[i][j--]);
-    }
-    j = minCol;
-    // go up, but decrease minRow first
-    minRow++;
-    if ((minRow >= maxRow)) {
-        break;
-    }
-    
-    i--;
-    while (i >= minRow) {  
-      result.push_back(inputMatrix[i--][j]);     
-    }
-    // decrease maxCol
-    maxCol--;
-    // decrease maxRow
-    maxRow--;
-    // increase minCol
-    minCol++;
-    
-    if ((minRow >= maxRow) || (minCol >= maxCol)) {
-        inProgress = false;
+    else {
+      k = (k+1)%4;
+      row += dr[k];
+      col += dc[k];
     }
   }
   return result;
