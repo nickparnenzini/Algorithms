@@ -1,4 +1,5 @@
 /* Coding challenge #146 from LeetCode */
+/* get() and put() are both O(1) time complexity */
 
 class LRUCache {
 public:
