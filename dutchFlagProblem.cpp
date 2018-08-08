@@ -9,7 +9,7 @@ void dutchFlagProblem(vector<int>& A, int index) {
     int low = 0;
     int high = A.size() - 1;
     while (low < high) {
-      while(A[low] < pivot) {low++;}
+      while(A[low] <= pivot) {low++;}
       while (A[high] > pivot) {high--;}
       if ( low > high) {
         break;
