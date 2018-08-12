@@ -1,61 +1,43 @@
-#include <iostream>
-#include <vector>
+/* Coding challenge #54 from LeetCode */
+/* Improved code from previous version */
 
-using namespace std;
-
- bool isSafe(int r, int c, int n, int m) {
-      return (r >= 0 && r < n) && (c >= 0 && c < m);
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> result;
+        if (matrix.empty()) {
+            return result;
+        }
+        
+        int start_row = 0;
+        int end_row = matrix.size() - 1;
+        int start_column = 0;
+        int end_column = matrix[0].size()-1;
+              
+        while (start_row <= end_row && start_column <= end_column) {
+             for (int j = start_column; j <= end_column; ++j) {
+            result.push_back(matrix[start_row][j]);   
+            }
+            start_row++;
+            if (start_row > end_row) {
+                break;
+            }
+            for (int i = start_row; i <= end_row; i++) {
+                result.push_back(matrix[i][end_column]);
+            }
+            end_column--;
+            if (start_column > end_column) {
+                break;
+            }
+            for (int j = end_column; j >= start_column; j--) {
+                result.push_back(matrix[end_row][j]);
+            }
+            end_row--;
+            for (int i = end_row; i >= start_row; i--) {
+                result.push_back(matrix[i][start_column]);
+            }
+            start_column++;    
+        }     
+        return result;
     }
-  
-vector<int> spiralCopy( const vector<vector<int>>& inputMatrix ) {
-  vector<int> result;
-  if (inputMatrix.empty())
-    return result;
-
-  int n = inputMatrix.size();
-  int m = inputMatrix[0].size();
-
-  bool seen[n][m];
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      seen[i][j] = false;
-    }
-  }
-  int row = 0;
-  int col = 0;
-  int k = 0;
-  int dr[] = {0, 1, 0, -1};
-  int dc[] = {1, 0, -1, 0};
-  for (int i = 0; i < n*m; i++) {
-    result.push_back(inputMatrix[row][col]);
-    seen[row][col] = true;
-    // next position
-    int next_row = row + dr[k];
-    int next_col = col + dc[k];
-    if (isSafe(next_row, next_col, n, m) && !seen[next_row][next_col]) {
-      row = next_row;
-      col = next_col;
-    }
-    else {
-      k = (k+1)%4;
-      row += dr[k];
-      col += dc[k];
-    }
-  }
-  return result;
-}
-
-int main() {
-  /* Example matrix to test the implementation */
-  vector<vector<int>> arr(4,vector<int>(5));
-  int n = arr.size();
-  int m = arr[0].size();
-  int count = 1;
-  for (int i = 0; i < n; ++i) {
-    for (int j = 0; j < m; ++j) {
-      arr[i][j] = count++;
-    }
-  } 
-  vector<int> result = spiralCopy(arr); 
-  return 0;
-}
+};
