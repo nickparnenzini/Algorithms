@@ -45,8 +45,7 @@ public:
     /** Returns one of the keys with maximal value. */
     string getMaxKey() {
         if (frequency_storage.size() > 0) {
-            auto it = frequency_storage.end();
-            --it;   
+            auto it = frequency_storage.rbegin(); 
             return it->second;
         }
         return "";     
